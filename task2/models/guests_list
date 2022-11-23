@@ -1,0 +1,15 @@
+import 'guest';
+
+class GuestsList {
+  final List guests;
+
+  const GuestsList(this.guests);
+
+  factory GuestsList.fromJson(Map<String, dynamic> json) {
+    var guestsJson = json['guests'] as List;
+
+    List<Guest> guestsList = guestsJson.map((g) => Guest.fromJson(g)).toList();
+
+    return GuestsList(guestsList);
+  }
+}

@@ -1,0 +1,17 @@
+class Guest {
+  final String name;
+  final bool plusOne;
+
+  const Guest({required this.name, required this.plusOne});
+
+  factory Guest.fromJson(Map<String, dynamic> data) {
+    final name = data['name'] ?? 'Uknown';
+    final plusOne = data['plusOne'] ?? false;
+
+    if (name == null) {
+      throw UnsupportedError('Invalid data: $data -> "name" is missing');
+    }
+
+    return Guest(name: name, plusOne: plusOne);
+  }
+}
