@@ -1,0 +1,21 @@
+void main() {
+  solutionEx1();
+}
+
+void solutionEx1() {
+  var guests = [
+    Guest(name: "Alice", plusOne: true),
+    Guest(name: "Bob", plusOne: true),
+    Guest(name: "Carl", plusOne: false),
+    Guest(name: "Debora", plusOne: true),
+    Guest(name: "Enrique", plusOne: true),
+    Guest(name: "Fred", plusOne: true),
+  ];
+  
+  var bill = 200;
+  guests.map((guest) => guest.plusOne ? bill+=200 : bill+=100).toList();
+  
+  bill == 1300 ? bill += 100 : bill;
+  
+  print(bill);
+}
