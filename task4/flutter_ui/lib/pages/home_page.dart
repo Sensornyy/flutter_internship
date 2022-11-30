@@ -56,8 +56,7 @@ class _HomePageState extends State<HomePage>
               elevation: 0,
               centerTitle: true,
               actions: const <Widget>[Icon(Icons.notes_sharp)],
-              title:
-              const Text('Lessons', style: TextStyle(color: Colors.white))),
+              title: const Text('Lessons', style: TextStyle(color: Colors.white))),
           body: Center(child: _pages[_index]),
           bottomNavigationBar: ColoredBox(
             color: AppColors.tabBarColor,
