@@ -29,11 +29,7 @@ class LevelDescription extends StatelessWidget {
                     ),
                   ),
                   FractionallySizedBox(
-                    widthFactor: level == Level.beginner
-                        ? 0.3
-                        : level == Level.intermediate
-                            ? 0.5
-                            : 1,
+                    widthFactor: switchCaseForWidthFactor(),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.amber,
@@ -47,15 +43,49 @@ class LevelDescription extends StatelessWidget {
           ],
         ),
         const SizedBox(width: 10),
-        Text(
-          level == Level.beginner
-              ? 'Beginner'
-              : level == Level.intermediate
-                  ? 'Intermediate'
-                  : 'Advanced',
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
-        ),
+        Text(switchCaseForTextTitle(),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold)),
       ],
     );
+  }
+
+  double switchCaseLevel(Level level) {
+    switch (level) {
+      case Level.beginner:
+        return 0.3;
+      case Level.intermediate:
+        return 0.5;
+      default:
+        return 1;
+    }
+  }
+}
+
+extension LevelDescriptionSwitchCaseMethods on LevelDescription {
+  double switchCaseForWidthFactor() {
+    switch (level) {
+      case Level.beginner:
+        return 0.3;
+      case Level.intermediate:
+        return 0.5;
+      case Level.advanced:
+        return 1;
+      default:
+        return 0;
+    }
+  }
+
+  String switchCaseForTextTitle() {
+    switch (level) {
+      case Level.beginner:
+        return 'Beginner';
+      case Level.intermediate:
+        return 'Intermediate';
+      case Level.advanced:
+        return 'Advanced';
+      default:
+        return 'Undefined';
+    }
   }
 }
