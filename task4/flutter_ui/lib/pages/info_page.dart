@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_ui/common/app_colors.dart';
 
-import '../model/level.dart';
 import '../widgets/level_description.dart';
 
 class InfoPage extends StatelessWidget {
@@ -59,7 +58,7 @@ class InfoPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          const LevelDescription(level: Level.beginner),
+                          const LevelDescription(level: 'Beginner'),
                           Container(
                             margin: const EdgeInsets.only(right: 60),
                             padding: const EdgeInsets.only(

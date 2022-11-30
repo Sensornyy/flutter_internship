@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_ui/common/app_colors.dart';
 import 'package:flutter_ui/widgets/level_description.dart';
 import 'package:flutter_ui/common/slide_transition.dart';
 
+import '../model/lesson/lesson.dart';
 import '../pages/info_page.dart';
-import '../model/level.dart';
 
 class LessonCard extends StatelessWidget {
-  const LessonCard({
-    Key? key,
-    required this.text,
-    required this.icon,
-    required this.level,
-  }) : super(key: key);
+  const LessonCard({Key? key, required this.lesson}) : super(key: key);
 
-  final Text text;
-  final Widget icon;
-  final Level level;
+  final Lesson lesson;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +26,7 @@ class LessonCard extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 const SizedBox(width: 20),
-                icon,
+                SvgPicture.asset(lesson.iconName, color: Colors.white, height: 40, width: 40),
                 const SizedBox(width: 10),
                 const VerticalDivider(
                     color: Colors.grey, indent: 12, endIndent: 12),
@@ -41,9 +35,9 @@ class LessonCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    text,
+                    Text(lesson.name, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w300) ),
                     const SizedBox(height: 5),
-                    LevelDescription(level: level),
+                    LevelDescription(level: lesson.level),
                   ],
                 ),
               ],
@@ -55,7 +49,8 @@ class LessonCard extends StatelessWidget {
           ),
           child: GestureDetector(
             onTap: () {
-              Navigator.push(context, slideTransitionTo(page: const InfoPage()));
+              Navigator.push(
+                  context, slideTransitionTo(page: const InfoPage()));
             },
             child: const Icon(
               Icons.arrow_forward_ios_outlined,
