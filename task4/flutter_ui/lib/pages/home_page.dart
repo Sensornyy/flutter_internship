@@ -12,11 +12,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  static const List<Widget> _pages = <Widget>[
-    LessonsPage(),
-    Icon(Icons.calendar_month_outlined, size: 150),
-    Icon(Icons.sticky_note_2_outlined, size: 150),
-    Icon(Icons.person_outline, size: 150),
+  static final List<Widget> _pages = <Widget>[
+    const LessonsPage(),
+    const Icon(Icons.calendar_month_outlined, size: 150),
+    const Icon(Icons.sticky_note_2_outlined, size: 150),
+    const Icon(Icons.person_outline, size: 150),
   ];
 
   static const List<Tab> _tabs = <Tab>[
