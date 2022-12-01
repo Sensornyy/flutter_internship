@@ -20,6 +20,7 @@ void solutionEx2() {
 
   var bill = 200;
   final jsonParsed = jsonEncode(guestsJSON);
+  print(jsonDecode(jsonParsed));
   final list = GuestsList.fromJson(jsonDecode(jsonParsed));
 
   list.guests.map((g) => g.plusOne ? bill += 200 : bill += 100).toList();
