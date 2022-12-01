@@ -9,7 +9,7 @@ class LessonRepository {
     final obj = await rootBundle.loadString("assets/json/source.json");
 
     final lessons = json.decode(obj);
-    print(lessons);
+   
     return (lessons as List).map((lesson) => Lesson.fromJson(lesson)).toList();
   }
 }

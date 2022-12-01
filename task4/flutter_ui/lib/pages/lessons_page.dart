@@ -13,7 +13,6 @@ class LessonsPage extends StatelessWidget {
         future: LessonRepository.getLessonsList(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            print(snapshot.hasData);
             if (snapshot.hasData) {
               final List<Lesson> lessons = snapshot.data! as List<Lesson>;
               return ListView.builder(
