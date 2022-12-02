@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_tab_bar.dart';
-import '../widgets/custom_tab_bar_view.dart';
+import 'custom_tab_bar_view.dart';
 import '../common/app_colors.dart';
+import 'lessons_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  static const List<Widget> _pages = <Widget>[
+    LessonsPage(),
+    Icon(Icons.calendar_month_outlined, size: 150),
+    Icon(Icons.sticky_note_2_outlined, size: 150),
+    Icon(Icons.person_outline, size: 150),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: _pages.length,
       child: Scaffold(
         backgroundColor: AppColors.mainBackground,
         appBar: AppBar(
@@ -21,7 +29,7 @@ class HomePage extends StatelessWidget {
             title:
                 const Text('Lessons', style: TextStyle(color: Colors.white))),
         body: const Center(
-          child: CustomTabBarView(),
+          child: CustomTabBarView(pages: _pages),
         ),
         bottomNavigationBar: const ColoredBox(
             color: AppColors.tabBarColor, child: CustomTabBar()),
