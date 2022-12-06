@@ -2,19 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:todo_app/common/app_colors.dart';
 
-import '../model/lesson/lesson.dart';
-
-class LessonCard extends StatelessWidget {
-  const LessonCard({Key? key, required this.lesson}) : super(key: key);
-
-  final Lesson lesson;
+class TaskCard extends StatelessWidget {
+  const TaskCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        
-      },
+      onTap: () {},
       child: Stack(
         children: <Widget>[
           Container(
