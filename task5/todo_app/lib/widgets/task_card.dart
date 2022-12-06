@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:todo_app/common/app_colors.dart';
-import 'package:todo_app/common/slide_transition.dart';
-import 'package:todo_app/pages/info_page.dart';
-import 'package:todo_app/widgets/level_description.dart';
 
 import '../model/lesson/lesson.dart';
 
@@ -16,7 +13,7 @@ class LessonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, slideTransitionTo(page: const InfoPage()));
+        
       },
       child: Stack(
         children: <Widget>[
@@ -46,7 +43,6 @@ class LessonCard extends StatelessWidget {
                               fontSize: 20,
                               fontWeight: FontWeight.w300)),
                       const SizedBox(height: 5),
-                      LevelDescription(level: lesson.level),
                     ],
                   ),
                 ],

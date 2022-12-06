@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/pages/tasks_page.dart';
 
 import '../widgets/custom_tab_bar.dart';
 import 'custom_tab_bar_view.dart';
 import '../common/app_colors.dart';
-import 'lessons_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   static const List<Widget> _pages = <Widget>[
-    LessonsPage(),
+    TasksPage(),
     Icon(Icons.calendar_month_outlined, size: 150),
     Icon(Icons.sticky_note_2_outlined, size: 150),
     Icon(Icons.person_outline, size: 150),
