@@ -21,8 +21,7 @@ class TaskCard extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   const SizedBox(width: 20),
-                  SvgPicture.asset(lesson.iconName,
-                      color: Colors.white, height: 40, width: 40),
+                  
                   const SizedBox(width: 10),
                   const VerticalDivider(
                       color: Colors.grey, indent: 12, endIndent: 12),
@@ -31,7 +30,7 @@ class TaskCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(lesson.name,
+                      Text('lesson.name,',
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
