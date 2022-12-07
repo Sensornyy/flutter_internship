@@ -30,8 +30,9 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         key: _scaffoldKey,
         backgroundColor: AppColors.mainBackground,
-        endDrawer: const Drawer(
-          child: SafeArea(
+        endDrawer: Drawer(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: const SafeArea(
             child: CreateTaskDrawer(),
           ),
         ),

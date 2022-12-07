@@ -1,3 +1,4 @@
+import 'dart:core';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -14,6 +15,9 @@ class _CreateTaskDrawerState extends State<CreateTaskDrawer> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
 
+  final List<String> _statuses = ['Ready', 'In progress', 'Done'];
+  String? _selectedStatus;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,14 +26,30 @@ class _CreateTaskDrawerState extends State<CreateTaskDrawer> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            TextFormField(
-              controller: _controller,
-              validator: _validateTitle,
-              style: const TextStyle(color: Colors.amber),
-              decoration: const InputDecoration(
-                helperText: 'Task title...',
-                helperStyle: TextStyle(color: Colors.amber),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextFormField(
+                controller: _controller,
+                validator: _validateTitle,
+                style: const TextStyle(color: Colors.amber),
+                decoration: const InputDecoration(
+                  hintText: 'Task title...',
+                  hintStyle: TextStyle(color: Colors.amber),
+                ),
               ),
+            ),
+            const SizedBox(height: 30),
+            DropdownButtonFormField(
+              dropdownColor: AppColors.mainBackground,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Task status...',
+                  hintStyle: TextStyle(color: Colors.amber)),
+              style: const TextStyle(color: Colors.amber),
+              items: _getItems(),
+              onChanged: _onChanged,
+              value: _selectedStatus,
+              validator: _validateStatus,
             ),
             const Expanded(child: SizedBox()),
             ElevatedButton(
@@ -61,10 +81,29 @@ class _CreateTaskDrawerState extends State<CreateTaskDrawer> {
     return null;
   }
 
+  String? _validateStatus(String? sts) {
+    if (sts == null) {
+      return 'Status is required';
+    }
+
+    return null;
+  }
+
+  List<DropdownMenuItem<String>> _getItems() {
+    return _statuses.map((sts) {
+      return DropdownMenuItem(value: sts, child: Text(sts));
+    }).toList();
+  }
+
+  void _onChanged(String? sts) {
+    setState(() {
+      _selectedStatus = sts;
+    });
+  }
+
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      log('Submitted!');
+      log('$_selectedStatus');
     }
   }
 }
