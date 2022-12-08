@@ -1,11 +1,13 @@
 import 'dart:core';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/common/app_colors.dart';
+import 'package:todo_app/common/get_random_icon.dart';
 
 class CreateTaskDrawer extends StatefulWidget {
-  const CreateTaskDrawer({Key? key}) : super(key: key);
+  const CreateTaskDrawer(this.addNewTask, {Key? key}) : super(key: key);
+
+  final Function addNewTask;
 
   @override
   State<CreateTaskDrawer> createState() => _CreateTaskDrawerState();
@@ -103,7 +105,12 @@ class _CreateTaskDrawerState extends State<CreateTaskDrawer> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      log('$_selectedStatus');
+      widget.addNewTask(
+        _controller.text,
+        getRandomIcon(),
+        _selectedStatus,
+      );
+      Navigator.pop(context);
     }
   }
 }

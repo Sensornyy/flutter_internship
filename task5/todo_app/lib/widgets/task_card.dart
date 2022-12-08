@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:todo_app/common/app_colors.dart';
 
-class TaskCard extends StatelessWidget {
-  const TaskCard({Key? key}) : super(key: key);
+import '../model/task.dart';
+
+class TaskCard extends StatefulWidget {
+  const TaskCard(this._task, {Key? key}) : super(key: key);
+
+  final Task _task;
 
   @override
+  State<TaskCard> createState() => _TaskCardState();
+}
+
+class _TaskCardState extends State<TaskCard> {
+  @override
   Widget build(BuildContext context) {
+    var cardColor = AppColors.cardBackground;
+
     return GestureDetector(
-      onTap: () {},
+      onDoubleTap: () {
+        setState(() {
+          cardColor = const Color.fromRGBO(38, 71, 71, 1);
+        });
+      },
       child: Stack(
         children: <Widget>[
           Container(
@@ -16,12 +30,10 @@ class TaskCard extends StatelessWidget {
               height: 100,
               margin: const EdgeInsets.only(bottom: 15),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: AppColors.cardBackground),
+                  borderRadius: BorderRadius.circular(5), color: cardColor),
               child: Row(
                 children: <Widget>[
                   const SizedBox(width: 20),
-                  
                   const SizedBox(width: 10),
                   const VerticalDivider(
                       color: Colors.grey, indent: 12, endIndent: 12),
@@ -30,7 +42,7 @@ class TaskCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('lesson.name,',
+                      Text(widget._task.title,
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
