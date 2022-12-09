@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,
-            //actions: <Widget>[IconButton(icon:Icon(Icons.notes_sharp), onPressed: () {})],
             title:
                 const Text('Lessons', style: TextStyle(color: Colors.white))),
         body: Center(
@@ -56,17 +55,27 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Status stringToStatus(String taskStatus) {
+    switch (taskStatus) {
+      case 'Ready':
+        return Status.ready;
+      case 'In progress':
+        return Status.inProgress;
+      default:
+        return Status.done;
+    }
+  }
+
   void _addTask(
     String taskTitle,
     Icon taskIcon,
     String taskStatus,
   ) {
     final newTask = Task(
-      id: DateTime.now().toString(),
-      title: taskTitle,
-      icon: taskIcon,
-      status: taskStatus,
-    );
+        id: DateTime.now().toString(),
+        title: taskTitle,
+        icon: taskIcon,
+        status: stringToStatus(taskStatus));
 
     setState(() {
       _tasks.add(newTask);

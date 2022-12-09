@@ -5,7 +5,7 @@ class Task {
   final String id;
   String title;
   Icon icon;
-  String status;
+  Status status;
 
   Task({
     required this.id,

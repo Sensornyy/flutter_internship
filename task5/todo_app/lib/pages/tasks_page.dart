@@ -24,16 +24,17 @@ class _TasksPageState extends State<TasksPage> {
             ),
           )
         : ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             itemCount: widget._tasks.length,
             itemBuilder: (context, index) {
               return Dismissible(
-                  key: ValueKey(widget._tasks[index]),
-                  onDismissed: (DismissDirection direction) {
-                    setState(() {
-                      widget.deleteTask(widget._tasks[index].id);
-                    });
-                  },
-                  child: TaskCard(widget._tasks[index]));
-            });
+                key: ValueKey(widget._tasks[index]),
+                onDismissed: (DismissDirection direction) {
+                  widget.deleteTask(widget._tasks[index].id);
+                },
+                child: TaskCard(widget._tasks[index]),
+              );
+            },
+          );
   }
 }

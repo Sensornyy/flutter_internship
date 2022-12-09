@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 Icon getRandomIcon() {
-  final List<int> points = <int>[0xe0b0, 0xe0b1, 0xe0b2, 0xe0b3, 0xe0b4];
+  final List<IconData> icons = <IconData>[Icons.school, Icons.work, Icons.home, Icons.car_rental];
   final Random r = Random();
 
-  return Icon(IconData(r.nextInt(points.length), fontFamily: 'MaterialIcons'));
+  return Icon(icons[r.nextInt(icons.length)], color: Colors.white, size: 44,);
 }
