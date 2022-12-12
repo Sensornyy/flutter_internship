@@ -1,8 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/common/app_colors.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late Animation<double> _animation;
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    _animation = Tween<double>(begin: 25.0, end: 30.0).animate(_controller)
+      ..addStatusListener(
+        (status) {
+          if (status == AnimationStatus.completed) {
+            _controller.reverse();
+          } else if (status == AnimationStatus.dismissed) {
+            _controller.forward();
+          }
+        },
+      );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +53,16 @@ class HomePage extends StatelessWidget {
         height: screenHeight * 0.8,
         color: AppColors.skyColor,
       ),
-      const Align(
+      Align(
         alignment: Alignment.topLeft,
         child: Padding(
-          padding: EdgeInsets.only(top: 65.0, left: 20.0),
-          child: CircleAvatar(
-            backgroundColor: AppColors.sunColor,
-            radius: 45,
+          padding: const EdgeInsets.only(top: 65.0, left: 20.0),
+          child: AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) => CircleAvatar(
+              backgroundColor: AppColors.sunColor,
+              radius: _animation.value,
+            ),
           ),
         ),
       ),
