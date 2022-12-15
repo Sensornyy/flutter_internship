@@ -1,22 +1,20 @@
-import 'package:todo_app/model/status.dart';
-
 class Task {
   final String id = DateTime.now() as String;
   final String title;
-  final Status status;
+  final bool isDone;
 
   Task({
     required this.title,
-    required this.status,
+    required this.isDone,
   });
 
   Task copyWith({
     String? title,
-    Status? status,
+    bool? isDone,
   }) {
     return Task(
       title: title ?? this.title,
-      status: status ?? this.status,
+      isDone: isDone ?? this.isDone,
     );
   }
 }
