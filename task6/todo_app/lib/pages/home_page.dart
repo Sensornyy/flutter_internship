@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/pages/tasks_page.dart';
-import 'package:todo_app/widgets/create_task_drawer.dart';
 
-import '../model/status.dart';
-import '../model/task.dart';
+
 import '../widgets/custom_tab_bar.dart';
 import 'custom_tab_bar_view.dart';
 import '../common/app_colors.dart';
@@ -22,69 +20,17 @@ class _HomePageState extends State<HomePage> {
     Icon(Icons.person_outline, size: 150),
   ];
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final List<Task> _tasks = [];
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: _pages.length + 1,
       child: Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: AppColors.mainBackground,
-        endDrawer: Drawer(
-          width: MediaQuery.of(context).size.width * 0.8,
-          child: SafeArea(
-            child: CreateTaskDrawer(_addTask),
-          ),
-        ),
-        appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            centerTitle: true,
-            title:
-                const Text('Lessons', style: TextStyle(color: Colors.white))),
         body: Center(
-          child:
-              CustomTabBarView(TasksPage(_tasks, _deleteTask), pages: _pages),
+          child: CustomTabBarView(TasksPage.create(), pages: _pages),
         ),
-        bottomNavigationBar: const ColoredBox(
-            color: AppColors.tabBarColor, child: CustomTabBar()),
+        bottomNavigationBar:
+            ColoredBox(color: AppColors.tabBarColor, child: CustomTabBar()),
       ),
     );
-  }
-
-  Status stringToStatus(String taskStatus) {
-    switch (taskStatus) {
-      case 'Ready':
-        return Status.ready;
-      case 'In progress':
-        return Status.inProgress;
-      default:
-        return Status.done;
-    }
-  }
-
-  void _addTask(
-    String taskTitle,
-    Icon taskIcon,
-    String taskStatus,
-  ) {
-    final newTask = Task(
-        id: DateTime.now().toString(),
-        title: taskTitle,
-        icon: taskIcon,
-        status: stringToStatus(taskStatus));
-
-    setState(() {
-      _tasks.add(newTask);
-    });
-  }
-
-  void _deleteTask(String id) {
-    setState(() {
-      _tasks.removeWhere((tx) => tx.id == id);
-    });
   }
 }

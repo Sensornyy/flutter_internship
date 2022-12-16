@@ -1,40 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/model/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/common/app_colors.dart';
+import 'package:todo_app/widgets/create_task_drawer.dart';
 
+import '../view_model/task_view_model.dart';
 import '../widgets/task_card.dart';
 
-class TasksPage extends StatefulWidget {
-  TasksPage(this._tasks, this.deleteTask, {Key? key}) : super(key: key);
+class TasksPage extends StatelessWidget {
+  const TasksPage({Key? key}) : super(key: key);
 
-  late final List<Task> _tasks;
-  final Function deleteTask;
-
-  @override
-  State<TasksPage> createState() => _TasksPageState();
-}
-
-class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
-    return widget._tasks.isEmpty
-        ? const Center(
-            child: Text(
-              'Nothing to show yet',
-              style: TextStyle(color: Colors.white, fontSize: 30),
-            ),
-          )
-        : ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            itemCount: widget._tasks.length,
-            itemBuilder: (context, index) {
-              return Dismissible(
-                key: ValueKey(widget._tasks[index]),
-                onDismissed: (DismissDirection direction) {
-                  widget.deleteTask(widget._tasks[index].id);
-                },
-                child: TaskCard(widget._tasks[index]),
-              );
-            },
-          );
+    var viewModel = context.watch<TaskViewModel>();
+
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return Scaffold(
+      backgroundColor: AppColors.mainBackground,
+      key: scaffoldKey,
+      appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          title: const Text('Tasks', style: TextStyle(color: Colors.white))),
+      endDrawer: CreateTaskDrawer(viewModel.addTask),
+      body: Padding(
+        padding: const EdgeInsets.all(15),
+        child: ListView.builder(
+          itemBuilder: (_, int index) => TaskCard(
+            task: viewModel.taskState.tasks[index],
+            onDelete: viewModel.deleteTask,
+            onToggle: viewModel.toggleTask,
+          ),
+          itemCount: viewModel.taskState.tasks.length,
+        ),
+      ),
+    );
   }
+
+  static Widget create() => ChangeNotifierProvider(
+        create: (_) => TaskViewModel(),
+        child: const TasksPage(),
+      );
 }

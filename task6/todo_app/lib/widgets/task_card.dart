@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/common/app_colors.dart';
-import 'package:todo_app/widgets/task_status_view.dart';
 
-import '../model/status.dart';
 import '../model/task.dart';
 
-class TaskCard extends StatefulWidget {
-  const TaskCard(this._task, {Key? key}) : super(key: key);
+class TaskCard extends StatelessWidget {
+  final Task task;
+  final Function(Task) onDelete;
+  final Function(Task) onToggle;
 
-  final Task _task;
-
-  @override
-  State<TaskCard> createState() => _TaskCardState();
-}
-
-class _TaskCardState extends State<TaskCard> {
-  var _isTaskDone = false;
+  const TaskCard({
+    Key? key,
+    required this.task,
+    required this.onDelete,
+    required this.onToggle,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onDoubleTap: () {
-        setState(() {
-          _isTaskDone = true;
-          widget._task.status = Status.done;
-        });
+    return Dismissible(
+      key: Key(task.id),
+      onDismissed: (_) {
+        onDelete(task);
+      },
+      child: GestureDetector(
+      onLongPress: () {
+        onToggle(task);
       },
       child: Stack(
         children: <Widget>[
@@ -34,35 +34,31 @@ class _TaskCardState extends State<TaskCard> {
             margin: const EdgeInsets.only(bottom: 15),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: _isTaskDone || widget._task.status == Status.done
+              color: task.isDone
                   ? AppColors.doneTaskCardColor
                   : AppColors.cardBackground,
             ),
             child: Row(
               children: <Widget>[
                 const SizedBox(width: 20),
-                widget._task.icon,
+                Checkbox(value: task.isDone, onChanged: (_) {
+                  onToggle(task);
+                }),
                 const SizedBox(width: 10),
                 const VerticalDivider(
                     color: Colors.grey, indent: 12, endIndent: 12),
                 const SizedBox(width: 10),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(widget._task.title,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w300)),
-                    const SizedBox(height: 5),
-                    TaskStatusView(widget._task)
-                  ],
-                ),
+                Text(task.title,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w300)),
+                const SizedBox(height: 5),
               ],
             ),
           ),
         ],
+      ),
       ),
     );
   }

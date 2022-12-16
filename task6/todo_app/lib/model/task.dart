@@ -1,5 +1,5 @@
 class Task {
-  final String id = DateTime.now() as String;
+  final String id = DateTime.now().toString();
   final String title;
   final bool isDone;
 
