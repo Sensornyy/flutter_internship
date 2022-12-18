@@ -23,42 +23,44 @@ class TaskCard extends StatelessWidget {
         onDelete(task);
       },
       child: GestureDetector(
-      onLongPress: () {
-        onToggle(task);
-      },
-      child: Stack(
-        children: <Widget>[
-          Container(
-            width: 380,
-            height: 100,
-            margin: const EdgeInsets.only(bottom: 15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: task.isDone
-                  ? AppColors.doneTaskCardColor
-                  : AppColors.cardBackground,
+        onLongPress: () {
+          onToggle(task);
+        },
+        child: Stack(
+          children: <Widget>[
+            Container(
+              width: 380,
+              height: 100,
+              margin: const EdgeInsets.only(bottom: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: task.isDone
+                    ? AppColors.doneTaskCardColor
+                    : AppColors.cardBackground,
+              ),
+              child: Row(
+                children: <Widget>[
+                  const SizedBox(width: 20),
+                  Checkbox(
+                      value: task.isDone,
+                      onChanged: (_) {
+                        onToggle(task);
+                      }),
+                  const SizedBox(width: 10),
+                  const VerticalDivider(
+                      color: Colors.grey, indent: 12, endIndent: 12),
+                  const SizedBox(width: 10),
+                  Text(task.title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300)),
+                  const SizedBox(height: 5),
+                ],
+              ),
             ),
-            child: Row(
-              children: <Widget>[
-                const SizedBox(width: 20),
-                Checkbox(value: task.isDone, onChanged: (_) {
-                  onToggle(task);
-                }),
-                const SizedBox(width: 10),
-                const VerticalDivider(
-                    color: Colors.grey, indent: 12, endIndent: 12),
-                const SizedBox(width: 10),
-                Text(task.title,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300)),
-                const SizedBox(height: 5),
-              ],
-            ),
-          ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }
