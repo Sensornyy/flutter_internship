@@ -23,7 +23,10 @@ class TasksPage extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
           title: const Text('Tasks', style: TextStyle(color: Colors.white))),
-      endDrawer: CreateTaskDrawer(viewModel.addTask),
+      endDrawer: CreateTaskDrawer(
+        onAdd: viewModel.addTask,
+        onStopEditing: viewModel.stopEditTasks,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: ListView.builder(
@@ -31,10 +34,21 @@ class TasksPage extends StatelessWidget {
             task: viewModel.taskState.tasks[index],
             onDelete: viewModel.deleteTask,
             onToggle: viewModel.toggleTask,
+            onEdit: viewModel.startEditTasks,
           ),
           itemCount: viewModel.taskState.tasks.length,
         ),
       ),
+      floatingActionButton: viewModel.taskState.tasks.any((t) => t.isEdit)
+          ? FloatingActionButton(
+              onPressed: viewModel.stopEditTasks,
+              backgroundColor: Colors.white,
+              child: const Icon(
+                Icons.close,
+                color: AppColors.mainBackground,
+              ),
+            )
+          : null,
     );
   }
 

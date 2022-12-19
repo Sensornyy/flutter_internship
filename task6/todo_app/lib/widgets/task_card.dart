@@ -7,12 +7,14 @@ class TaskCard extends StatelessWidget {
   final Task task;
   final Function(Task) onDelete;
   final Function(Task) onToggle;
+  final Function(Task) onEdit;
 
   const TaskCard({
     Key? key,
     required this.task,
     required this.onDelete,
     required this.onToggle,
+    required this.onEdit,
   }) : super(key: key);
 
   @override
@@ -24,7 +26,7 @@ class TaskCard extends StatelessWidget {
       },
       child: GestureDetector(
         onLongPress: () {
-          onToggle(task);
+          task.isEdit ? onToggle(task) : onEdit(task);
         },
         child: Stack(
           children: <Widget>[
@@ -41,11 +43,18 @@ class TaskCard extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   const SizedBox(width: 20),
-                  Checkbox(
-                      value: task.isDone,
-                      onChanged: (_) {
-                        onToggle(task);
-                      }),
+                  if (task.isEdit)
+                    Checkbox(
+                        value: task.isDone,
+                        onChanged: (_) {
+                          onToggle(task);
+                        })
+                  else
+                    const Icon(
+                      Icons.star,
+                      color: Colors.white,
+                      size: 48,
+                    ),
                   const SizedBox(width: 10),
                   const VerticalDivider(
                       color: Colors.grey, indent: 12, endIndent: 12),

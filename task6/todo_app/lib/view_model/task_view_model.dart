@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/model/task_model_state.dart';
 
@@ -40,6 +42,32 @@ class TaskViewModel extends ChangeNotifier {
     var index = list.indexWhere((t) => t.id == task.id);
 
     list[index] = task.copyWith(isDone: !task.isDone);
+
+    taskState = taskState.copyWith(tasks: list);
+    log('toggle rebuild');
+  }
+
+  void startEditTasks(Task task) {
+    var list = taskState.tasks.toList();
+
+    var index = list.indexWhere((t) => t.id == task.id);
+
+    list[index] = task.copyWith(isDone: true);
+
+    for (var i = 0; i < list.length; i++) {
+      list[i] = list[i].copyWith(isEdit: true);
+    }
+
+    taskState = taskState.copyWith(tasks: list);
+    log('edit rebuild');
+  }
+
+  void stopEditTasks() {
+    var list = taskState.tasks.toList();
+
+    for (var i = 0; i < list.length; i++) {
+      list[i] = list[i].copyWith(isEdit: false);
+    }
 
     taskState = taskState.copyWith(tasks: list);
   }

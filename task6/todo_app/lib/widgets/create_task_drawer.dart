@@ -7,8 +7,13 @@ import '../model/task.dart';
 
 class CreateTaskDrawer extends StatefulWidget {
   final ValueChanged<Task> onAdd;
+  final Function onStopEditing;
 
-  const CreateTaskDrawer(this.onAdd, {Key? key}) : super(key: key);
+  const CreateTaskDrawer({
+    required this.onAdd,
+    required this.onStopEditing,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<CreateTaskDrawer> createState() => _CreateTaskDrawerState();
@@ -72,7 +77,12 @@ class _CreateTaskDrawerState extends State<CreateTaskDrawer> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      widget.onAdd(Task(title: _controller.text, isDone: false));
+      widget.onAdd(Task(
+        title: _controller.text,
+        isDone: false,
+        isEdit: false,
+      ));
+      widget.onStopEditing();
       Navigator.pop(context);
     }
   }
