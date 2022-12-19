@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/app_colors.dart';
+import 'package:todo_app/common/snack_bars.dart';
 import 'package:todo_app/widgets/create_task_drawer.dart';
 
 import '../view_model/task_view_model.dart';
@@ -41,7 +42,10 @@ class TasksPage extends StatelessWidget {
       ),
       floatingActionButton: viewModel.taskState.tasks.any((t) => t.isEdit)
           ? FloatingActionButton(
-              onPressed: viewModel.stopEditTasks,
+              onPressed: () {
+                viewModel.stopEditTasks();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBars.taskEditSuccess);
+              },
               backgroundColor: Colors.white,
               child: const Icon(
                 Icons.close,
