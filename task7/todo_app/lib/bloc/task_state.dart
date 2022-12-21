@@ -1,0 +1,23 @@
+import 'package:equatable/equatable.dart';
+
+import '../model/task.dart';
+
+abstract class TasksState extends Equatable {
+  const TasksState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class TasksInitialState extends TasksState {}
+
+class TasksLoadedState extends TasksState {
+  const TasksLoadedState({required this.tasks});
+
+  final List<Task> tasks;
+  
+  @override
+  List<Object> get props => [tasks];
+}
+
+class TasksErrorState extends TasksState {}
