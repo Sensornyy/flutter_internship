@@ -22,9 +22,15 @@ class TasksCubit extends Cubit<TasksState> {
   }
 
   void deleteTask(Task task) {
-    try {
+    var tasksState = state;
+
+    if (tasksState is TasksLoadedState) {
+      var tasks = tasksState.tasks;
+
       tasks.removeWhere((t) => t.id == task.id);
-    } catch (e) {
+
+      emit(TasksLoadedState(tasks: tasks));
+    } else {
       emit(TasksErrorState());
     }
   }
