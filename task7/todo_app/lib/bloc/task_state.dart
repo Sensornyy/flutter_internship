@@ -9,7 +9,10 @@ abstract class TasksState extends Equatable {
   List<Object> get props => [];
 }
 
-class TasksInitialState extends TasksState {}
+class TasksInitialState extends TasksState {
+  @override
+  List<Object> get props => [];
+}
 
 class TasksLoadedState extends TasksState {
   const TasksLoadedState({required this.tasks});
@@ -29,4 +32,7 @@ class TasksEditingState extends TasksState {
   List<Object> get props => [tasksToEdit];
 }
 
-class TasksErrorState extends TasksState {}
+class TasksErrorState extends TasksState {
+  @override
+  List<Object> get props => [];
+}

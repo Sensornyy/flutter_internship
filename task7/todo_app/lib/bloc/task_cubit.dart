@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:todo_app/bloc/task_state.dart';
@@ -7,16 +9,22 @@ import '../model/task.dart';
 class TasksCubit extends Cubit<TasksState> {
   TasksCubit() : super(TasksInitialState());
 
+  void start() {
+    emit(TasksLoadedState(tasks: []));
+  }
+
   void addTask(Task task) {
     var tasksState = state;
-
+    log(tasksState.runtimeType.toString());
+    
     if (tasksState is TasksLoadedState) {
       var tasks = tasksState.tasks;
-
+log(tasksState.runtimeType.toString());
       tasks.add(task);
 
       emit(TasksLoadedState(tasks: tasks));
     } else {
+      log(tasksState.runtimeType.toString());
       emit(TasksErrorState());
     }
   }

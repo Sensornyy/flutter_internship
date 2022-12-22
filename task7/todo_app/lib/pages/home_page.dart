@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/pages/tasks_page.dart';
 
+import '../bloc/task_cubit.dart';
 import '../widgets/custom_tab_bar.dart';
 import 'custom_tab_bar_view.dart';
 import '../common/app_colors.dart';
@@ -25,7 +27,12 @@ class _HomePageState extends State<HomePage> {
       length: _pages.length + 1,
       child: Scaffold(
         body: Center(
-          child: CustomTabBarView(TasksPage.create(), pages: _pages),
+          child: CustomTabBarView(
+              BlocProvider<TasksCubit>(
+                create: (context) => TasksCubit()..start(),
+                child: const TasksPage(),
+              ),
+              pages: _pages),
         ),
         bottomNavigationBar: const ColoredBox(
           color: AppColors.tabBarColor,
