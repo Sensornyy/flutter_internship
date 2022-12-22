@@ -50,4 +50,40 @@ class TasksCubit extends Cubit<TasksState> {
       emit(TasksErrorState());
     }
   }
+
+  void editTask(Task task) {
+    var tasksState = state;
+
+    if (tasksState is TasksEditingState) {
+      var tasksToEdit = tasksState.tasksToEdit;
+
+      var index = tasksToEdit.indexWhere((t) => t.id == task.id);
+
+      tasksToEdit[index] = task.copyWith(isDone: true);
+
+      for (var i = 0; i < tasksToEdit.length; i++) {
+        tasksToEdit[i] = tasksToEdit[i].copyWith(isEdit: true);
+      }
+
+      emit(TasksEditingState(tasksToEdit: tasksToEdit));
+    } else {
+      emit(TasksErrorState());
+    }
+  }
+
+  void cancelEditingTask() {
+    var tasksState = state;
+
+    if (tasksState is TasksEditingState) {
+      var tasks = tasksState.tasksToEdit;
+
+      for (var i = 0; i < tasks.length; i++) {
+        tasks[i] = tasks[i].copyWith(isEdit: false);
+      }
+
+      emit(TasksLoadedState(tasks: tasks));
+    } else {
+      emit(TasksErrorState());
+    }
+  }
 }

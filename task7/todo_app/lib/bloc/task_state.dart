@@ -20,4 +20,13 @@ class TasksLoadedState extends TasksState {
   List<Object> get props => [tasks];
 }
 
+class TasksEditingState extends TasksState {
+  const TasksEditingState({required this.tasksToEdit});
+
+  final List<Task> tasksToEdit;
+
+  @override
+  List<Object> get props => [tasksToEdit];
+}
+
 class TasksErrorState extends TasksState {}
