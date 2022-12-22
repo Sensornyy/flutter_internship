@@ -36,9 +36,18 @@ class TasksCubit extends Cubit<TasksState> {
   }
 
   void toggleTask(Task task) {
-    try {
+    var tasksState = state;
+
+    if (tasksState is TasksLoadedState) {
+      var tasks = tasksState.tasks;
+
       var index = tasks.indexWhere((t) => t.id == task.id);
+
       tasks[index] = task.copyWith(isDone: !task.isDone);
-    } catch (e) {}
+
+      emit(TasksLoadedState(tasks: tasks));
+    } else {
+      emit(TasksErrorState());
+    }
   }
 }
