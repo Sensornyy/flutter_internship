@@ -25,16 +25,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: _pages.length + 1,
-      child: Scaffold(
+      child: const Scaffold(
         body: Center(
           child: CustomTabBarView(
-              BlocProvider<TasksCubit>(
-                create: (context) => TasksCubit()..start(),
-                child: const TasksPage(),
-              ),
-              pages: _pages),
+            TasksPage(),
+            pages: _pages,
+          ),
         ),
-        bottomNavigationBar: const ColoredBox(
+        bottomNavigationBar: ColoredBox(
           color: AppColors.tabBarColor,
           child: CustomTabBar(),
         ),

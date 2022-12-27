@@ -1,19 +1,14 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/common/app_colors.dart';
 
+import '../bloc/task_cubit.dart';
 import '../model/task.dart';
 
 class CreateTaskDrawer extends StatefulWidget {
-  final ValueChanged<Task> onAdd;
-  final Function onStopEditing;
-
-  const CreateTaskDrawer({
-    required this.onAdd,
-    required this.onStopEditing,
-    Key? key,
-  }) : super(key: key);
+  const CreateTaskDrawer({Key? key}) : super(key: key);
 
   @override
   State<CreateTaskDrawer> createState() => _CreateTaskDrawerState();
@@ -77,12 +72,10 @@ class _CreateTaskDrawerState extends State<CreateTaskDrawer> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      widget.onAdd(Task(
-        title: _controller.text,
-        isDone: false,
-        isEdit: false,
-      ));
-      widget.onStopEditing();
+      context.read<TasksCubit>().addTask(Task(
+            title: _controller.text,
+            isDone: false,
+          ));
       Navigator.pop(context);
     }
   }
