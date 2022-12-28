@@ -82,9 +82,10 @@ class TasksCubit extends Cubit<TasksState> {
 
   void cancelEditingTask() {
     final tasksState = state;
+    final List<Task> tasks;
 
     if (tasksState is TasksEditingState) {
-      var tasks = tasksState.tasksToEdit;
+      tasks = tasksState.tasksToEdit;
 
       emit(TasksLoadedState(tasks: tasks));
     } else {
